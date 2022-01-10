@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useRef, useState} from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { LatLng, LeafletView, WebViewLeaflet, WebViewLeafletEvents, AnimationType } from 'react-native-leaflet-view';
+import { LatLng, LeafletView, WebViewLeaflet, WebViewLeafletEvents, AnimationType, MapShapeType } from 'react-native-leaflet-view';
 import { WebView } from 'react-native-webview';
 import * as Location from 'expo-location';
 
@@ -66,8 +66,7 @@ const Stamen_Toner_Tiles =
         ext: 'png'
     };
 
-
-export default function LeafletMap() {
+export default function LeafletMap(props) {
 
     const myStartPosition = {lat: 57.6954, lng: 11.9271};
     const startPositionDefault = {lat: 59.6954, lng: 12.9271};
@@ -80,11 +79,22 @@ export default function LeafletMap() {
     const [zoomLevel, setZoom] = useState(13);
     const [currentZoom, setCurrentZoom] = useState(0);
     const [mapLayers, setMapLayers] = useState(defaultLayers);
+    const [mapShapes, setMapShapes] = useState(null);
     const [isDetailed, setIsDetailed] = useState(false);
     //var isDetailed = false;
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 //    const [msg, setMsg] = useState('Waiting ...');
+
+    const test_mapShapes = [
+        {
+          shapeType: MapShapeType.CIRCLE,
+          color: "#123123",
+          id: "1",
+          center: { lat: 34.225727, lng: -77.94471 },
+          radius: 2000
+        }
+    ];
 
     const myPositionMarker = {
         position: ownPosition,
@@ -119,7 +129,11 @@ export default function LeafletMap() {
         setZoom(13);
         setCurrentZoom(13);
       })();
-    }, []);   
+    }, []);
+
+    useEffect(() => {
+        console.log('shape magic!');
+    }, []);
 
     useEffect(() => {
         if(currentZoom > 16) {
@@ -139,12 +153,6 @@ export default function LeafletMap() {
         return val % 1 === 0;
     }
 
-    function putMyPosition() {
-        if(ownPosition && !ownMarker) {
-            setOwnMarker(true);
-            return myPositionMarker;
-        }
-    }
 
     const messageReceived = (message) => {
         if(message.event == WebViewLeafletEvents.ON_ZOOM) {
