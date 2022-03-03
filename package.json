@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/react-native-fade-in-image": "^1.1.1",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
@@ -27,7 +28,6 @@
     "react-leaflet": "^3.2.2",
     "react-native": "0.66.4",
     "react-native-elements": "^3.4.2",
-    "react-native-gesture-handler": "~1.10.2",
     "react-native-leaflet-view": "^0.1.2",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",

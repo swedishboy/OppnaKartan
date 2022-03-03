@@ -46,7 +46,6 @@ const s = StyleSheet.create({
     bottom: {
         flex: 1,
         flexDirection: 'row',
-        alignSelf: 'bottom',
         width: '100%',
         color: '#fff',
         padding: 25,

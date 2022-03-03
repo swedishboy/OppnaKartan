@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { View, SafeAreaView, Text, StyleSheet } from 'react-native';
 import LeafletMap from 'oppnakartan/parts/Map.js'
-import {AppSections} from 'oppnakartan/shared/globals';
+//import {AppSections} from 'oppnakartan/shared/globals';
 
 export default function MapView(props) {
 

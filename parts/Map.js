@@ -21,7 +21,8 @@ const LoadingIndicator = () => {
         </View>
     );    
 }
-// const startPosition = {lat: 57.6954, lng: 11.9271};
+
+//const startPosition = {lat: 57.6954, lng: 11.9271};
 // const zoomLevel = 12;
 
 const Stamen_Watercolor_Layer = {
@@ -49,7 +50,7 @@ const CartoDB_Labels_Only = {
 
 const Stamen_Terrain_Labels = {
     url: 'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-labels/{z}/{x}/{y}{r}.{ext}',
-	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	//attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 	subdomains: 'abcd',
 	minZoom: 0,
 	maxZoom: 20,
@@ -69,7 +70,7 @@ const Stamen_Toner_Tiles =
 export default function LeafletMap(props) {
 
     const myStartPosition = {lat: 57.6954, lng: 11.9271};
-    const startPositionDefault = {lat: 59.6954, lng: 12.9271};
+    const startPositionDefault = {lat: 57.6954, lng: 11.9271}; //{lat: 59.6954, lng: 12.9271};
     const defaultLayers = [Stamen_Watercolor_Layer, Stamen_Terrain_Labels];
     const detailedLayers = [Stamen_Watercolor_Layer, Stamen_Toner_Tiles];
 
@@ -82,7 +83,7 @@ export default function LeafletMap(props) {
     const [mapShapes, setMapShapes] = useState(null);
     const [isDetailed, setIsDetailed] = useState(false);
     //var isDetailed = false;
-    const [location, setLocation] = useState(null);
+    //const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 //    const [msg, setMsg] = useState('Waiting ...');
 
@@ -91,8 +92,8 @@ export default function LeafletMap(props) {
           shapeType: MapShapeType.CIRCLE,
           color: "#123123",
           id: "1",
-          center: { lat: 34.225727, lng: -77.94471 },
-          radius: 2000
+          center: { lat: 57.6954, lng: 12.0271 },
+          radius: 3000
         }
     ];
 
@@ -109,30 +110,31 @@ export default function LeafletMap(props) {
     };
 
 
-    useEffect(() => {
-      (async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-          setErrorMsg('Permission to access location was denied');
-          return;
-        }
+    // useEffect(() => {
+    //   (async () => {
+    //     let { status } = await Location.requestForegroundPermissionsAsync();
+    //     if (status !== 'granted') {
+    //       setErrorMsg('Permission to access location was denied');
+    //       return;
+    //     }
   
-        let location = await Location.getLastKnownPositionAsync({});
-        //setLocation(location);
-        //console.log(location);
-        let newPosition = {lat: location.coords.latitude, lng: location.coords.longitude};
-        setStartPosition(newPosition);
-        if(!ownPosition) {
-            setOwnPosition(newPosition);
-        }
+    //     let location = await Location.getLastKnownPositionAsync({});
+    //     //setLocation(location);
+    //     //console.log(location);
+    //     let newPosition = {lat: location.coords.latitude, lng: location.coords.longitude};
+    //     setStartPosition(newPosition);
+    //     if(!ownPosition) {
+    //         setOwnPosition(newPosition);
+    //     }
 
-        setZoom(13);
-        setCurrentZoom(13);
-      })();
-    }, []);
+    //     setZoom(13);
+    //     setCurrentZoom(13);
+    //   })();
+    // }, []);
 
     useEffect(() => {
         console.log('shape magic!');
+        setOwnPosition(startPositionDefault);
     }, []);
 
     useEffect(() => {
@@ -178,7 +180,7 @@ export default function LeafletMap(props) {
             <>
             <LeafletView renderLoading={() => <LoadingIndicator />} doDebug={false} 
  mapCenterPosition={startPosition} showZoomControls={false} zoom={zoomLevel} mapLayers={mapLayers} 
-onLoadEnd={handleLoadEnd} onMessageReceived={messageReceived} mapMarkers={[myPositionMarker]}
+onLoadEnd={handleLoadEnd} mapShapes={test_mapShapes} onMessageReceived={messageReceived} mapMarkers={[myPositionMarker]}
  />
             </>
     );

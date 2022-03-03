@@ -6,7 +6,7 @@ export enum AppSections {
     EXPLORE = 'Explore',
     MAPMODE = 'Map',
     SETTINGS = 'Settings',
-    ABOUT = 'About',
+    ABOUT = 'AboutView',
 }
 
 export enum FServices {

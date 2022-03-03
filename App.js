@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { SafeAreaView, StyleSheet, View, Pressable, Dimensions } from 'react-native';
-import {Explore, HomeScreen, Page, MapView, GeoTest} from './screens/index.js';
+import {Explore, HomeScreen, About, MapView, GeoTest} from './screens/index.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
-import baseStyle from './shared/styles.js';
+//import baseStyle from './shared/styles.js';
 import {AppSections} from './shared/globals';
 
 const { width, height } = Dimensions.get("window");
@@ -78,7 +78,7 @@ function MainStackScreen( props ) {
 function OtherScreens() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="About" component={Page} />
+      <Stack.Screen name="About" component={About} options={{headerShown: false}} />
     </Stack.Navigator>
   );
 }
@@ -106,7 +106,9 @@ const Tab = createBottomTabNavigator();
 
 export default function App(props) {
   let [fontsLoaded] = Font.useFonts({
-    'Roboto-Mono': require('./assets/fonts/RobotoMono-VariableFont_wght.ttf'),
+    'Roboto-Mono': require('./assets/fonts/Roboto_Mono/static/RobotoMono-Regular.ttf'),
+    'Roboto-Mono-Light': require('./assets/fonts/Roboto_Mono/static/RobotoMono-Light.ttf'),
+    'Roboto-Mono-Bold': require('./assets/fonts/Roboto_Mono/static/RobotoMono-Bold.ttf'),
   });
 
 

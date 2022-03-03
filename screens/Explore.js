@@ -4,7 +4,6 @@ import { SafeAreaView, ImageBackground, ActivityIndicator, View, FlatList, Text,
 import baseStyle from '../shared/styles';
 import * as Location from 'expo-location';
 import * as GeoLib from 'geolib';
-import { isShorthandPropertyAssignment } from 'typescript';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window')
@@ -52,17 +51,36 @@ function ForestServices(props) {
         var index = colorSelector[value]; 
         return index == 1 ? maincolor : altcolor;
     }
+
+    let colorA = getColor(1);
+    let colorB = getColor(2);
+    let colorC = getColor(3);
+    let colorD = getColor(4);
     return(
         <View style={styles.forestServices}>
-            <FontAwesome5 name="parking" size={32} color={getColor(1)} />
-            <FontAwesome5 name="monument" size={32} color={getColor(2)} />
-            <FontAwesome5 name="tree" size={32} color={getColor(3)} />
-            <MaterialCommunityIcons name="campfire" size={32} color={getColor(4)} />
+            <View style={styles.iconHolder}>
+            <FontAwesome5 name="parking" size={32} color={colorA} />
+            <Text style={[styles.small, {color: colorA}]}>Parkering</Text>
+            </View>
+            <View style={styles.iconHolder}>
+            <FontAwesome5 name="monument" size={32} color={colorB} />
+            <Text style={[styles.small, {color: colorB}]}>Fornminnen</Text>
+            </View>
+
+            <View style={styles.iconHolder}>
+            <FontAwesome5 name="tree" size={32} color={colorC} />
+            <Text style={[styles.small, {color: colorC}]}>Urskog</Text>
+            </View>
+
+            <View style={styles.iconHolder}>
+            <MaterialCommunityIcons name="campfire" size={32} color={colorD} />
+            <Text style={[styles.small, {color: colorD}]}>Lägerplats</Text>
+            </View>
         </View>
     );
 }
 
-function Item({ title, distance, type }){
+function Item({ title, distance, type, near }){
     let bg = pickRandomBackground();
     return (
     <ImageBackground source={bg} style={baseStyle.background}>
@@ -73,7 +91,7 @@ function Item({ title, distance, type }){
     </View>
     <View style={styles.exploreBox}>
     <Text style={styles.boxTitle}>{type}</Text>
-    <Text style={styles.boxTitle2}>Nära X</Text>
+    <Text style={styles.boxTitle2}>Nära <Text style={{fontFamily: 'Roboto-Mono'}}>{near}</Text></Text>
     <ForestServices />
     </View>      
     </View>
@@ -128,6 +146,7 @@ const diveIntoArray = async(inputArray) => {
             data.features.map(d => {
                 // settings some vars
                 let forestName = d.properties?.name;
+                let nearTo = d.properties?.near || 'Okänt';
                 let forestID = d.properties?.id || 'id' + (new Date()).getTime();
 
                 // array to hold our data from promise
@@ -159,7 +178,7 @@ const diveIntoArray = async(inputArray) => {
                     });
                     //console.log('shortest distance for > '+forestName+' = '+minDistance);
                     let distanceText = minDistance > 1 ? minDistance+' km' : minDistance*100+' m';
-                    newData.push({id: forestID, title: forestName, type: d.properties.typ, coords: coordinatesOut, distance: minDistance, distanceText: distanceText});
+                    newData.push({id: forestID, title: forestName, type: d.properties.typ, near: nearTo, coords: coordinatesOut, distance: minDistance, distanceText: distanceText});
                 });
             });
             await sleep(1000);
@@ -192,7 +211,7 @@ const diveIntoArray = async(inputArray) => {
 export default function Explore(props) {
 
     const renderItem = (item, index) => (
-        <Item title={item.title} index={index} distance={item.distanceText} type={item.type} />
+        <Item title={item.title} index={index} distance={item.distanceText} type={item.type} near={item.near} />
         );
         
     const [latlng, setLatlng] = useState(null);
@@ -300,7 +319,7 @@ title: {
     fontSize: 32,
     textTransform: 'capitalize',
     letterSpacing: -.1,
-    fontFamily: 'Roboto-Mono',
+    fontFamily: 'Roboto-Mono-Bold',
     textAlign: 'center',
     marginTop: 60,
 },
@@ -332,21 +351,37 @@ exploreBox: {
 boxTitle: {
     fontSize: 24,
     fontWeight: "600",
+    fontFamily: 'Roboto-Mono',
     textTransform: 'capitalize',
     color: '#fff',
 },
 boxTitle2: {
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: 'Roboto-Mono-Light',
     fontWeight: '300',
     color: '#fff',
-    marginTop: 5
+    marginTop: 10
 },
 forestServices: {
     flex: 1,
     flexDirection: 'row',
     width: '80%',
-    marginTop: 30,
+    marginTop: 40,
     justifyContent: 'space-between',
+},
+small: {
+    fontFamily: 'Roboto-Mono',
+    fontSize: 8,
+    color: 'white',
+},
+maincolor: {
+    color: 'white'
+},
+altcolor: {
+    color: 'rgba(225,225,225,.2)'
+},
+iconHolder: {
+    alignItems: 'center'
 },
 debug: {
     fontFamily: 'Roboto-Mono',

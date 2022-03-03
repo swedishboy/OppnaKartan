@@ -12,6 +12,9 @@ const baseStyle = StyleSheet.create({
     darkBg: {
         backgroundColor: '#222',
     },
+    whiteBg: {
+        backgroundColor: '#fff'
+    },
     background: {
         width: '100%',
         height: '100%',
@@ -26,22 +29,51 @@ const baseStyle = StyleSheet.create({
         color: 'white',
         fontFamily: 'Roboto-Mono',
     },
-
+    pageWrap: {
+        paddingHorizontal: 20,
+        paddingTop: 20,
+        paddingBottom: 80,
+        width: '100%',
+        height: '100%',
+    },
+    pageTitle: {
+        fontSize: 24,
+        fontFamily: 'Roboto-Mono',
+        marginVertical: 10,
+    },
+    h2: {
+        fontSize: 16,
+        fontFamily: 'Roboto-Mono-Bold',
+    },
+    pageText: {
+        fontFamily: 'Roboto-Mono-Light',
+        marginVertical: 20,
+        fontSize: 16,
+    },
+    bulletList: {
+        marginVertical: 20,
+    },
+    bulletEntry: {
+        fontFamily: 'Roboto-Mono-Light',
+        fontSize: 16,
+        marginHorizontal: 16,        
+    },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 16,
         paddingHorizontal: 22,
-        borderRadius: 6,
+        borderRadius: 8,
         borderColor: 'rgba(255,255,255,.8)',
         borderWidth: 1.5,
         elevation: 3,
-        shadowOpacity: .7,
+        shadowOpacity: .3,
         marginBottom: 15,
+        marginTop: 0,
     },
     button_normal: {
-        shadowOffset: {width: 5, height: 5},
-        backgroundColor: 'rgba(50,50,50,.8)',
+        shadowOffset: {width: 3, height: 3},
+        backgroundColor: 'rgba(0,0,0,.7)',
         shadowRadius: 4,
     },
     button_pressed: {
